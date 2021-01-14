@@ -7,3 +7,5 @@
 #     { "epoch" : INT, "string": STRING}
 #
 # The lines are delivered wrapped in an array.
+#
+# The stringified date is UTC and ISO-8601 formatted.
