@@ -1,1 +1,3 @@
 # Generate a momotonic timeline.
+
+# monotonic_timeline <from date> <until date> <increment size>
