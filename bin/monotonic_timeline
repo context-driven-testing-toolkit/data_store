@@ -4,8 +4,8 @@
 
 # The result lines look as follows. Both payloads can hydrate a DATETIME object.
 # 
-#     { "epoch" : INT, "string": STRING}
+#    { STRING: { "interval": { "epoch": INT, "string": STRING }, "events" : [] } }
 #
 # The lines are delivered wrapped in an array.
 #
-# The stringified date is UTC and ISO-8601 formatted.
+# The stringified date in STRING.interval.string is UTC and ISO-8601 formatted.
