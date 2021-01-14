@@ -1,3 +1,9 @@
 # Generate a momotonic timeline.
 
 # monotonic_timeline <from date> <until date> <increment size>
+
+# The result lines look as follows. Both payloads can hydrate a DATETIME object.
+# 
+#     { "epoch" : INT, "string": STRING}
+#
+# The lines are delivered wrapped in an array.
