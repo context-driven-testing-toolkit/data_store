@@ -2,15 +2,21 @@
 
 set -o errexit -o nounset -o pipefail
 
-# monotonic_datetime_of <date string>
+if [ -z "${3-}" ]
+then
+  echo "Usage: $(basename "${0-}") <start of timeline> <arbitrary datetime> <monotonic increment>"
+  exit 1
+fi
 
-start=1546300800
+start=${1}
 
-event=1608162218
+event=${2}
+
+increment=${3}
 
 time_elapsed=$(( event - start ))
 
-slop=$(( time_elapsed % 3600 ))
+slop=$(( time_elapsed % increment ))
 
 monotonic_interval=$(( event - slop ))
 
