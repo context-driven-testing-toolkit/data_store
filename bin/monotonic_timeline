@@ -2,20 +2,23 @@
 
 set -o errexit -o nounset -o pipefail
 
-# Generate a momotonic timeline.
-
-# monotonic_timeline <from date> <until date> <increment size>
-
-# The result lines look as follows. Both payloads of interval.epoch can hydrate a DATETIME object.
+# Generate a monotonic timeline.
 #
-#    .interval.epoch: { "interval": { "epoch": INT, "string": STRING }, "events" : [] },
+#     monotonic_timeline <from date> <until date> <increment size>
+#
+# The result lines look as follows (pseudocode). Both payloads of
+# interval.epoch can hydrate a DATETIME object.
+#
+#     .interval.epoch: { "interval": { "epoch": INT, "string": STRING }, "events" : [] },
 #
 # The stringified date in STRING is UTC and ISO-8601 formatted.
 #
-# The lines are returned inside an onject like this:
+# The lines returned are JSON blobs like this:
 #
-#    { meta: { history: { start: DATETIME, end: DATETIME }, increment: STRING },
-#      timeline: [] }
+#     { meta: {
+#         history: { start: DATETIME, end: DATETIME }, increment: STRING },
+#         timeline: []
+#     }
 #
 # Where .timeline contains the lines of the timeline descending order.
 
@@ -25,10 +28,12 @@ then
   exit 1
 fi
 
-origin=$(date -u -d "${1}" --iso-8601=s)
+origin=$(date --utc --iso-8601=s -d "${1}")
 
-terminus=$(date -u -d "${2}" --iso-8601=s)
+terminus=$(date --utc --iso-8601=s -d "${2}")
 
-dateseq --compute-from-last "$origin" "${3}" "$terminus" \
+monotonic_increment="${3}"
+
+dateseq --compute-from-last "$origin" "$monotonic_increment" "$terminus" \
         -f '{"%s": {"interval": {"epoch": %s, "string": "%FT%T%Z"}}, "events": []}' \
         | jq -ec .
