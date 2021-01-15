@@ -2,10 +2,15 @@
 
 # monotonic_timeline <from date> <until date> <increment size>
 
-# The result lines look as follows. Both payloads can hydrate a DATETIME object.
+# The result lines look as follows. Both payloads of interval.epoch can hydrate a DATETIME object.
 # 
-#    { STRING: { "interval": { "epoch": INT, "string": STRING }, "events" : [] } }
+#    .interval.epoch: { "interval": { "epoch": INT, "string": STRING }, "events" : [] },
 #
-# The lines are delivered wrapped in an array.
+# The stringified date in STRING is UTC and ISO-8601 formatted.
 #
-# The stringified date in STRING.interval.string is UTC and ISO-8601 formatted.
+# The lines are returned inside an onject like this:
+#
+#    { meta: { history: { start: DATETIME, end: DATETIME }, increment: STRING }, 
+#      timeline: [] }
+#
+# Where .timeline contains the lines of the timeline descending order.
