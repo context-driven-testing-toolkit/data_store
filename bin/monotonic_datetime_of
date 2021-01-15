@@ -1,0 +1,3 @@
+# monotonic_datetime_of <date string>
+
+monotonic_timeline $TIMELINE_ORIGIN ${1} $MONOTONIC_INCREMENT | tail -n1
