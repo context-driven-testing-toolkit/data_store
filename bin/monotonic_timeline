@@ -25,8 +25,10 @@ then
   exit 1
 fi
 
-origin=$(date -d "${1}" --iso-8601=s)
+origin=$(date -u -d "${1}" --iso-8601=s)
 
-terminus=$(date -d "${2}" --iso-8601=s)
+terminus=$(date -u -d "${2}" --iso-8601=s)
 
-dateseq --compute-from-last "$origin" "${3}" "$terminus"
+dateseq --compute-from-last "$origin" "${3}" "$terminus" \
+        -f '{"%s": {"interval": {"epoch": %s, "string": "%FT%T%Z"}}, "events": []}' \
+        | jq -ec .
