@@ -1,3 +1,17 @@
+#!/usr/bin/env bash
+
+set -o errexit -o nounset -o pipefail
+
 # monotonic_datetime_of <date string>
 
-monotonic_timeline $TIMELINE_ORIGIN ${1} $MONOTONIC_INCREMENT | tail -n1
+start=1546300800
+
+event=1608162218
+
+time_elapsed=$(( event - start ))
+
+slop=$(( time_elapsed % 3600 ))
+
+monotonic_interval=$(( event - slop ))
+
+echo $monotonic_interval
