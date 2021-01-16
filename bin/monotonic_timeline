@@ -35,5 +35,5 @@ terminus=$(date --utc --iso-8601=s -d "${2}")
 monotonic_increment="${3}"
 
 dateseq --compute-from-last "$origin" "$monotonic_increment" "$terminus" \
-        -f '{"%s": {"interval": {"epoch": %s, "string": "%FT%T%Z"}}, "events": []}' \
+        -f '{"%s": {"interval": {"epoch": %s, "string": "%FT%T%Z"}}}' \
         | jq -ec .
